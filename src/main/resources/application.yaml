@@ -7,3 +7,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  devtools:
+    livereload:
+      enabled: true
