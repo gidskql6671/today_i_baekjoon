@@ -1,0 +1,9 @@
+spring:
+  config:
+    import:
+      - optional:classpath:/secrets.yaml
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
