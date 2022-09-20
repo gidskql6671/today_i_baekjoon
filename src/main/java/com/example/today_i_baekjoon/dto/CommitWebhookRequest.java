@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +17,11 @@ import java.util.List;
 public class CommitWebhookRequest {
     private ArrayList<Commit> commits;
 
+    @NotNull
     @JsonProperty("head_commit")
     private Commit headCommit;
 
+    @NotNull
     @JsonProperty("pusher")
     private Pusher pusher;
 
@@ -37,7 +41,9 @@ public class CommitWebhookRequest {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Commit {
+        @NotBlank
         private String url;
+        @NotNull
         private LocalDateTime timestamp;
     }
 
@@ -46,7 +52,9 @@ public class CommitWebhookRequest {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Pusher {
+        @NotBlank
         private String name;
+        @NotBlank
         private String email;
     }
 

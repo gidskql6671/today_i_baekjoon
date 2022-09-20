@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -21,7 +22,7 @@ public class GithubWebhookController {
     private final CommitService commitService;
 
     @PostMapping("/push")
-    public void push(@RequestBody CommitWebhookRequest request) {
+    public void push(@Valid @RequestBody CommitWebhookRequest request) {
         System.out.println(request);
         String username = request.getPusherName();
 
