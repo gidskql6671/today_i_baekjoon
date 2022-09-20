@@ -9,13 +9,15 @@ import lombok.ToString;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class CommitWebhookRequest {
-    private ArrayList<Commit> commits;
+    private List<Commit> commits = new ArrayList<>();
 
     @NotNull
     @JsonProperty("head_commit")
@@ -29,22 +31,27 @@ public class CommitWebhookRequest {
         return pusher.getName();
     }
 
-    public List<Commit> getCommits() {
+    public List<Commit> getNewCommits() {
         List<Commit> result = new ArrayList<>(commits);
         result.add(headCommit);
 
         return result;
     }
 
-    @Getter
     @ToString
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Commit {
+        @Getter
         @NotBlank
         private String url;
+        
         @NotNull
-        private LocalDateTime timestamp;
+        private ZonedDateTime timestamp;
+        
+        public LocalDateTime getTimestamp() {
+            return timestamp.toLocalDateTime();
+        }
     }
 
     @Getter
