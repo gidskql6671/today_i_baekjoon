@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title> 1일 1백준 </title>
+	<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div class="container mt-5">
+		<h1 class="mb-4"> 1일 1백준 로그 </h1>
+		<div class="text-center">
+			<table class="table table-striped fs-3" >
+				<thead>
+				<tr>
+					<th scope="col"> 이름 </th>
+					<th scope="col"> 커밋 했어? </th>
+					<th scope="col"> 커밋 개수 </th>
+				</tr>
+				</thead>
+				<tbody>
+				
+				<th:block th:each="ele : ${userCommits}">
+					<tr>
+						<td th:text="${ele.key}"> 이름 </td>
+						<td th:if="${#lists.size(ele.value) == 0}"> &#10060; </td>
+						<td th:if="${#lists.size(ele.value) > 0}"> &#9989; </td>
+						<td th:text="${#lists.size(ele.value)}"> 개수 </td>
+					</tr>
+				</th:block>
+				</tbody>
+			</table>
+			
+		</div>
+	</div>
+	
+	<script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

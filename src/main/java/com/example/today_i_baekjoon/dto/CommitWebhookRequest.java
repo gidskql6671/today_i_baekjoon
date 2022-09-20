@@ -8,7 +8,7 @@ import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +39,8 @@ public class CommitWebhookRequest {
         @NotNull
         private ZonedDateTime timestamp;
         
-        public LocalDateTime getTimestamp() {
-            return timestamp.toLocalDateTime();
+        public LocalDate getTimestamp() {
+            return timestamp.toLocalDate();
         }
     }
 

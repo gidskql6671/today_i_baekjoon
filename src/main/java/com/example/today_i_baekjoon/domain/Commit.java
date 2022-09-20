@@ -3,9 +3,10 @@ package com.example.today_i_baekjoon.domain;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
@@ -17,7 +18,7 @@ public class Commit {
 	private Long id;
 	
 	@Column(nullable = false)
-	private LocalDateTime commitDateTime;
+	private LocalDate commitDate;
 
 	@Column(nullable = false, unique = true)
 	private String commitUrl;
@@ -25,11 +26,4 @@ public class Commit {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
-
-	@Builder
-	public Commit(LocalDateTime commitDateTime, String commitUrl, User user) {
-		this.commitDateTime = commitDateTime;
-		this.commitUrl = commitUrl;
-		this.user = user;
-	}
 }
