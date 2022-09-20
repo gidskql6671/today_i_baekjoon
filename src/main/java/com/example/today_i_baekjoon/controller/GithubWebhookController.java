@@ -11,15 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@RestController("/api/webhook")
 @RequiredArgsConstructor
-public class CommitController {
+public class GithubWebhookController {
 
     private final UserService userService;
     private final CommitService commitService;
 
-    @PostMapping("/")
-    public void createCommit(@RequestBody CommitWebhookRequest request) {
+    @PostMapping("/push")
+    public void push(@RequestBody CommitWebhookRequest request) {
+        System.out.println(request);
         String username = request.getPusherName();
 
         List<CommitWebhookRequest.Commit> commits = request.getCommits();
