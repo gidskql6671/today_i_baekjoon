@@ -17,11 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommitWebhookRequest {
+    @Getter
     private List<Commit> commits = new ArrayList<>();
-
-    @NotNull
-    @JsonProperty("head_commit")
-    private Commit headCommit;
 
     @NotNull
     @JsonProperty("pusher")
@@ -29,13 +26,6 @@ public class CommitWebhookRequest {
 
     public String getPusherName() {
         return pusher.getName();
-    }
-
-    public List<Commit> getNewCommits() {
-        List<Commit> result = new ArrayList<>(commits);
-        result.add(headCommit);
-
-        return result;
     }
 
     @ToString

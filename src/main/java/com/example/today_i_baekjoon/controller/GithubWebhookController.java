@@ -26,7 +26,7 @@ public class GithubWebhookController {
         System.out.println(request);
         String username = request.getPusherName();
 
-        List<CommitWebhookRequest.Commit> commits = request.getNewCommits();
+        List<CommitWebhookRequest.Commit> commits = request.getCommits();
         User user = userService
                 .findUserByUsername(username)
                 .orElseGet(() -> userService.createUser(username));
