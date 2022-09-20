@@ -7,11 +7,13 @@ import com.example.today_i_baekjoon.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController("/api/webhook")
+@RestController
+@RequestMapping("/api/webhook")
 @RequiredArgsConstructor
 public class GithubWebhookController {
 
@@ -26,7 +28,7 @@ public class GithubWebhookController {
         List<CommitWebhookRequest.Commit> commits = request.getCommits();
         User user = userService
                 .findUserByUsername(username)
-                .orElseGet(() -> userService.createUser(username));;
+                .orElseGet(() -> userService.createUser(username));
 
         commitService.addCommits(user, commits);
     }
