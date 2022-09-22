@@ -24,7 +24,10 @@ public class GithubWebhookController {
     public ResponseEntity<String> push(
             @RequestHeader(value = "X-GitHub-Event") String githubEvent,
             @Valid @RequestBody CommitWebhookRequest request) {
-        if (!Objects.equals(githubEvent, "push")) {
+        if (Objects.equals(githubEvent, "ping")) {
+            return ResponseEntity.ok().body("valid webhook");
+        }
+        else if (!Objects.equals(githubEvent, "push")) {
             return ResponseEntity.badRequest().body("Only allowed if 'X-Github-Event' is 'push'.");
         }
         
