@@ -33,7 +33,7 @@ public class HomeController {
 		
 		Map<String, List<CommitInfo>> userCommits = mappedCommitToUser(users, commits);
 
-		log.debug(String.valueOf(userCommits));
+		log.info(String.valueOf(userCommits));
 		model.addAttribute("userCommits", userCommits);
 
 		return "index";

@@ -28,13 +28,16 @@ public class CommitWebhookRequest {
         return pusher.getName();
     }
 
+    @Getter
     @ToString
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Commit {
-        @Getter
         @NotBlank
         private String url;
+
+        @NotBlank
+        private String message;
         
         @NotNull
         private ZonedDateTime timestamp;

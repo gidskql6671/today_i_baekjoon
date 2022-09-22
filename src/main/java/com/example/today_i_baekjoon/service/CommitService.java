@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,18 +19,25 @@ import java.util.stream.Collectors;
 public class CommitService {
 
     private final CommitRepository commitRepository;
+    private final Pattern pattern = Pattern.compile("^\\[(?<rank>.*)] Title: (?<title>.*), Time:");
 
     public void addCommits(User user, List<CommitWebhookRequest.Commit> commitRequests) {
         List<Commit> commits = commitRequests
                 .stream()
                 .filter(commitRequest -> !commitRepository.existsByCommitUrl(commitRequest.getUrl()))
-                .map(commitRequest ->
-                        Commit.builder()
-                                .user(user)
-                                .commitDate(commitRequest.getTimestamp())
-                                .commitUrl(commitRequest.getUrl())
-                                .build()
-                )
+                .map(commitRequest -> {
+                    Matcher matcher = pattern.matcher(commitRequest.getMessage());
+                    String rank = matcher.group("rank");
+                    String title = matcher.group("title");
+                    
+                    return Commit.builder()
+                            .user(user)
+                            .commitDate(commitRequest.getTimestamp())
+                            .commitUrl(commitRequest.getUrl())
+                            .problemTitle(title)
+                            .problemRank(rank)
+                            .build();
+                })
                 .toList();
 
         commitRepository.saveAll(commits);

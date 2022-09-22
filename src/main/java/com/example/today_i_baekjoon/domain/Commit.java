@@ -22,6 +22,12 @@ public class Commit {
 
 	@Column(nullable = false, unique = true)
 	private String commitUrl;
+	
+	@Column
+	private String problemRank;
+	
+	@Column(nullable = false)
+	private String problemTitle;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")

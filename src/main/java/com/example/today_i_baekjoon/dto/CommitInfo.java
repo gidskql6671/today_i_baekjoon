@@ -17,12 +17,16 @@ public class CommitInfo {
 	private LocalDate commitDate;
 	private String commitUrl;
 	private String username;
+	private String problemTitle;
+	private String problemRank;
 
 	public static CommitInfo fromEntity(Commit commit) {
 		return CommitInfo.builder()
 				.commitDate(commit.getCommitDate())
 				.commitUrl(commit.getCommitUrl())
 				.username(commit.getUser().getUsername())
+				.problemRank(commit.getProblemRank())
+				.problemTitle(commit.getProblemTitle())
 				.build();
 	}
 }
