@@ -11,6 +11,14 @@
 	<div class="container mt-5">
 		<h1 class="mb-4"> 1일 1백준 로그 </h1>
 		<div class="text-center">
+			<a class="fs-1 text-decoration-none" th:href="@{/(date = ${prevDate})}"> ◁ </a>
+			<span class="fs-1 mx-4" th:text="${curDate}"> 날짜 </span>
+			<a class="fs-1 text-decoration-none" 
+			   th:href="@{/(date = ${nextDate})}"
+			   th:if="${nextDate}"> ▷ </a>
+			<a class="fs-1 text-decoration-none" th:unless="${nextDate}" style="visibility: hidden"> ▷ </a>
+		</div>
+		<div class="text-center">
 			<table class="table table-striped fs-3" >
 				<thead>
 				<tr>
