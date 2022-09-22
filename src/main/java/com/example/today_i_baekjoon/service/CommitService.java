@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class CommitService {
 
     private final CommitRepository commitRepository;
-    private final Pattern pattern = Pattern.compile("^\\[(?<rank>.*)] Title: (?<title>.*), Time:");
+    private final Pattern pattern = Pattern.compile("^\\[(?<rank>.*)] Title: (?<title>.*), Time:.*");
 
     public void addCommits(User user, List<CommitWebhookRequest.Commit> commitRequests) {
         List<Commit> commits = commitRequests
@@ -27,8 +27,11 @@ public class CommitService {
                 .filter(commitRequest -> !commitRepository.existsByCommitUrl(commitRequest.getUrl()))
                 .map(commitRequest -> {
                     Matcher matcher = pattern.matcher(commitRequest.getMessage());
-                    String rank = matcher.group("rank");
-                    String title = matcher.group("title");
+                    String rank = "", title = "";
+                    if (matcher.matches()) {
+                        rank = matcher.group("rank");
+                        title = matcher.group("title");
+                    }
                     
                     return Commit.builder()
                             .user(user)
