@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title> 1일 1백준 </title>
+	<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="/css/detail.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div class="container mt-5">
+		<div style="display: flex; justify-content: space-between">
+			<span class="fs-1 mb-4"> 1일 1백준 로그 </span>
+			<a class="fs-3 text-decoration-none" th:href="@{/}"> 뒤로가기 </a>
+		</div>
+		<div class="text-center">
+			<div class="sec_cal">
+				<div class="cal_nav">
+					<a th:href="@{''(yearMonth = ${prevYearMonth})}" class="nav-btn go-prev">prev</a>
+					<div class="year-month" th:text="${yearMonth}"> 날짜 </div>
+					<a th:href="@{''(yearMonth = ${nextYearMonth})}"
+					   class="nav-btn go-next"
+					   th:if="${nextYearMonth}"> next </a>
+					<a th:href="@{''(yearMonth = ${nextYearMonth})}"
+					   class="nav-btn go-next"
+					   th:unless="${nextYearMonth}" 
+					   style="visibility: hidden"> next </a>
+				</div>
+				<div class="cal_wrap">
+					<div class="days">
+						<div class="day">SUN</div>
+						<div class="day">MON</div>
+						<div class="day">TUE</div>
+						<div class="day">WED</div>
+						<div class="day">THU</div>
+						<div class="day">FRI</div>
+						<div class="day">SAT</div>
+					</div>
+					<div class="dates">
+					<th:block th:each="week : ${calendar}">
+						<th:block th:each="date : ${week}">
+							<div class="day commit" th:if="${dateCommits.containsKey(date)}" th:text="${date}"> 날짜 </div>
+							<div class="day" th:unless="${dateCommits.containsKey(date)}" th:text="${date}"> 날짜 </div>
+						</th:block>
+					</th:block>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -61,4 +61,12 @@ public class CommitService {
                 .map(CommitInfo::fromEntity)
                 .collect(Collectors.toList());
     }
+    
+    public List<CommitInfo> getAllCommitsBetweenDate(LocalDate start, LocalDate end, User user) {
+        return commitRepository
+                .findAllByCommitDateBetweenAndUser(start, end, user)
+                .stream()
+                .map(CommitInfo::fromEntity)
+                .collect(Collectors.toList());
+    }
 }

@@ -14,6 +14,10 @@ public class UserService {
     
     private final UserRepository userRepository;
 
+    public Optional<User> findUser(Long userId) {
+        return userRepository.findById(userId);    
+    }
+    
     public Optional<User> findUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }

@@ -11,10 +11,10 @@
 	<div class="container mt-5">
 		<h1 class="mb-4"> 1일 1백준 로그 </h1>
 		<div class="text-center">
-			<a class="fs-1 text-decoration-none" th:href="@{/(date = ${prevDate})}"> ◁ </a>
+			<a class="fs-1 text-decoration-none" th:href="@{''(date = ${prevDate})}"> ◁ </a>
 			<span class="fs-1 mx-4" th:text="${curDate}"> 날짜 </span>
 			<a class="fs-1 text-decoration-none" 
-			   th:href="@{/(date = ${nextDate})}"
+			   th:href="@{''(date = ${nextDate})}"
 			   th:if="${nextDate}"> ▷ </a>
 			<a class="fs-1 text-decoration-none" th:unless="${nextDate}" style="visibility: hidden"> ▷ </a>
 		</div>
@@ -31,7 +31,11 @@
 				
 				<th:block th:each="ele : ${userCommits}">
 					<tr>
-						<td th:text="${ele.key}"> 이름 </td>
+						<td> 
+							<a class="text-decoration-none" 
+							   th:text="${ele.key}" 
+							   th:href="@{/user/{userId}(userId = ${ele.key})}"></a> 
+						</td>
 						<td th:if="${#lists.size(ele.value) == 0}"> &#10060; </td>
 						<td th:if="${#lists.size(ele.value) > 0}"> &#9989; </td>
 						<td th:text="${#lists.size(ele.value)}"> 개수 </td>
