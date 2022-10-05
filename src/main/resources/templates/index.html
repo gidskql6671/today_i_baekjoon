@@ -12,7 +12,17 @@
 		<h1 class="mb-4"> 1일 1백준 로그 </h1>
 		<div class="text-center">
 			<a class="fs-1 text-decoration-none" th:href="@{''(date = ${prevDate})}"> ◁ </a>
-			<span class="fs-1 mx-4" th:text="${curDate}"> 날짜 </span>
+			<span class="fs-1 mx-4"
+				  th:text="${#temporals.format(curDate, 'yyyy-MM-dd(E)')}"
+				  th:if="${#temporals.dayOfWeek(curDate) == 6}"
+				  style="color: blue"> 날짜 </span>
+			<span class="fs-1 mx-4"
+				  th:text="${#temporals.format(curDate, 'yyyy-MM-dd(E)')}"
+				  th:if="${#temporals.dayOfWeek(curDate) == 7}"
+				  style="color: red"> 날짜 </span>
+			<span class="fs-1 mx-4"
+				  th:text="${#temporals.format(curDate, 'yyyy-MM-dd(E)')}"
+				  th:if="${#temporals.dayOfWeek(curDate) < 6}"> 날짜 </span>
 			<a class="fs-1 text-decoration-none" 
 			   th:href="@{''(date = ${nextDate})}"
 			   th:if="${nextDate}"> ▷ </a>
