@@ -40,7 +40,6 @@ public class HolidayService {
 
     @Transactional
     public void removeHolidays(List<LocalDate> dates) {
-        System.out.println(dates);
         holidayRepository.deleteByDateIn(dates);
     }
     
