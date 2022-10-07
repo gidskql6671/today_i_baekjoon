@@ -1,54 +1,46 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title> 1일 1백준 </title>
-	<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-	<link href="/css/detail.css" rel="stylesheet" type="text/css">
-</head>
-<body>
-	<div class="container mt-5">
-		<h1 class="mb-4">
-			<a class="text-decoration-none text-black" th:href="@{/}"> 1일 1백준 로그 </a>
-		</h1>
-		<div class="text-center">
-			<div class="sec_cal">
-				<div class="cal_nav">
-					<a th:href="@{''(yearMonth = ${prevYearMonth})}" class="nav-btn go-prev">prev</a>
-					<div class="year-month" th:text="${yearMonth}"> 날짜 </div>
-					<a th:href="@{''(yearMonth = ${nextYearMonth})}"
-					   class="nav-btn go-next"
-					   th:if="${nextYearMonth}"> next </a>
-					<a th:href="@{''(yearMonth = ${nextYearMonth})}"
-					   class="nav-btn go-next"
-					   th:unless="${nextYearMonth}" 
-					   style="visibility: hidden"> next </a>
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{/css/detail.css}" >
+</th:block>
+
+<th:block layout:fragment="content">
+	<div class="text-center">
+		<div class="sec_cal">
+			<div class="cal_nav">
+				<a th:href="@{''(yearMonth = ${prevYearMonth})}" class="nav-btn go-prev">prev</a>
+				<div class="year-month" th:text="${yearMonth}"> 날짜 </div>
+				<a th:href="@{''(yearMonth = ${nextYearMonth})}"
+				   class="nav-btn go-next"
+				   th:if="${nextYearMonth}"> next </a>
+				<a th:href="@{''(yearMonth = ${nextYearMonth})}"
+				   class="nav-btn go-next"
+				   th:unless="${nextYearMonth}" 
+				   style="visibility: hidden"> next </a>
+			</div>
+			<div class="cal_wrap">
+				<div class="days">
+					<div class="day">SUN</div>
+					<div class="day">MON</div>
+					<div class="day">TUE</div>
+					<div class="day">WED</div>
+					<div class="day">THU</div>
+					<div class="day">FRI</div>
+					<div class="day">SAT</div>
 				</div>
-				<div class="cal_wrap">
-					<div class="days">
-						<div class="day">SUN</div>
-						<div class="day">MON</div>
-						<div class="day">TUE</div>
-						<div class="day">WED</div>
-						<div class="day">THU</div>
-						<div class="day">FRI</div>
-						<div class="day">SAT</div>
-					</div>
-					<div class="dates">
-					<th:block th:each="week : ${calendar}">
-						<th:block th:each="date : ${week}">
-							<div class="day commit" th:if="${dateCommits.containsKey(date)}" th:text="${date}"> 날짜 </div>
-							<div class="day" th:unless="${dateCommits.containsKey(date)}" th:text="${date}"> 날짜 </div>
-						</th:block>
+				<div class="dates">
+				<th:block th:each="week : ${calendar}">
+					<th:block th:each="date : ${week}">
+						<div class="day commit" th:if="${dateCommits.containsKey(date)}" th:text="${date}"> 날짜 </div>
+						<div class="day" th:unless="${dateCommits.containsKey(date)}" th:text="${date}"> 날짜 </div>
 					</th:block>
-					</div>
+				</th:block>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	<script src="/js/bootstrap.min.js"></script>
-</body>
-</html>
+</th:block>

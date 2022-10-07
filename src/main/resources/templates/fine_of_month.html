@@ -1,18 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title> 1일 1백준 </title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-</head>
-<body>
-<div class="container mt-5">
-    <div style="display: flex; justify-content: space-between">
-        <span class="fs-1 mb-4"> 1일 1백준 로그 </span>
-        <a class="fs-3 text-decoration-none" th:href="@{/}"> 뒤로가기 </a>
-    </div>
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<th:block layout:fragment="content">
     <div class="text-center">
         <a class="fs-1 text-decoration-none" th:href="@{''(yearMonth = ${prevYearMonth})}"> ◁ </a>
         <span class="fs-1 mx-4"
@@ -43,8 +35,6 @@
         </table>
 
     </div>
-</div>
+</th:block>
 
-<script src="/js/bootstrap.min.js"></script>
-</body>
 </html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title> 1일 1백준 </title>
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" >
+	<th:block layout:fragment="css" />
+</head>
+<body>
+	<div class="container mt-5">
+		<th:block th:replace="fragments/header :: headerFragment" />
+		<th:block layout:fragment="content" />
+	</div>
+	
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<th:block layout:fragment="script" />
+</body>
+</html>
