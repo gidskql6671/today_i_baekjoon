@@ -5,6 +5,7 @@ import com.example.today_i_baekjoon.dto.CommitInfo;
 import com.example.today_i_baekjoon.exception.UserNotFoundException;
 import com.example.today_i_baekjoon.service.CommitService;
 import com.example.today_i_baekjoon.service.FineService;
+import com.example.today_i_baekjoon.service.HolidayService;
 import com.example.today_i_baekjoon.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ public class HomeController {
 	private final CommitService commitService;
 	private final UserService userService;
 	private final FineService fineService;
+	private final HolidayService holidayService;
 
 	@GetMapping("/")
 	public String homepage(Model model,
@@ -77,10 +79,15 @@ public class HomeController {
 		List<List<Integer>> calendar = getCalendarList(yearMonth);
 		
 		Map<Integer, List<CommitInfo>> dateCommits = mappedCommitToDate(commits);
-		
+		List<Integer> holidays = holidayService
+				.getHolidaysBetweenDate(start, end)
+				.stream()
+				.map(LocalDate::getDayOfMonth)
+				.toList();
 		
 		model.addAttribute("dateCommits", dateCommits);
 		model.addAttribute("calendar", calendar);
+		model.addAttribute("holidays", holidays);
 
 		model.addAttribute("yearMonth", yearMonth);
 		model.addAttribute("prevYearMonth", yearMonth.minusMonths(1));

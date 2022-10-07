@@ -28,7 +28,6 @@
 
 .sec_cal .cal_nav .go-prev,
 .sec_cal .cal_nav .go-next {
-    display: block;
     width: 50px;
     height: 78px;
     font-size: 0;
@@ -83,11 +82,10 @@
     align-items: center;
     justify-content: center;
     width: calc(100% / 7);
-    text-align: left;
     color: #999;
     font-size: 12px;
     text-align: center;
-    border-radius:5px
+    border-radius: 50%;
 }
 
 .current.today {background: rgb(242 242 242);}
@@ -113,4 +111,8 @@
 
 .sec_cal .cal_wrap .day.commit {
     background-color: greenyellow;
+}
+
+.sec_cal .cal_wrap .day.holiday {
+    background-color: lightblue;
 }

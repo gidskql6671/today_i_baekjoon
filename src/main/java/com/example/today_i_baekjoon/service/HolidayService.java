@@ -43,4 +43,12 @@ public class HolidayService {
         System.out.println(dates);
         holidayRepository.deleteByDateIn(dates);
     }
+    
+    public List<LocalDate> getHolidaysBetweenDate(LocalDate start, LocalDate end) {
+        return holidayRepository
+                .findAllByDateBetween(start, end)
+                .stream()
+                .map(Holiday::getDate)
+                .toList();
+    }
 }

@@ -35,8 +35,9 @@
 				<div class="dates">
 				<th:block th:each="week : ${calendar}">
 					<th:block th:each="date : ${week}">
-						<div class="day commit" th:if="${dateCommits.containsKey(date)}" th:text="${date}"> 날짜 </div>
-						<div class="day" th:unless="${dateCommits.containsKey(date)}" th:text="${date}"> 날짜 </div>
+						<div th:text="${date}" class="day" 
+						     th:classappend="${dateCommits.containsKey(date) ? 'commit' : 
+						                       (holidays.contains(date) ? 'holiday' : '')}"> 날짜 </div>
 					</th:block>
 				</th:block>
 				</div>
