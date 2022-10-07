@@ -45,7 +45,10 @@ public class HomeController {
 		List<User> users = userService.findAll();
 		
 		Map<String, List<CommitInfo>> userCommits = mappedCommitToUser(users, commits);
+		Map<String, String> namesMappedUsername = new HashMap<>();
+		users.forEach(user -> namesMappedUsername.put(user.getUsername(), user.getName()));
 
+		model.addAttribute("namesMappedUsername", namesMappedUsername);
 		model.addAttribute("userCommits", userCommits);
 		model.addAttribute("curDate", curDate);
 		// NOTE thymeleaf dates 라이브러리 사용이 안되는 버그가 있어서 여기서 다 넣어줌. 뭐가 문젠지 모르겠음;;

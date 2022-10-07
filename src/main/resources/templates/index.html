@@ -38,11 +38,10 @@
 				<tr>
 					<td>
 						<a class="text-decoration-none text-black"
-						   th:text="${ele.key}"
+						   th:text="${namesMappedUsername.get(ele.key)}"
 						   th:href="@{/user/{userId}(userId = ${ele.key})}"></a>
 					</td>
-					<td th:if="${#lists.size(ele.value) == 0}"> &#10060; </td>
-					<td th:if="${#lists.size(ele.value) > 0}"> &#9989; </td>
+					<td th:text="${#lists.size(ele.value) > 0 ? '&#9989;' : '&#10060;'}"></td>
 					<td th:text="${#lists.size(ele.value)}"> 개수 </td>
 				</tr>
 			</th:block>
