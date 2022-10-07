@@ -5,9 +5,11 @@ import com.example.today_i_baekjoon.domain.Holiday;
 import com.example.today_i_baekjoon.repository.HolidayRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -24,5 +26,21 @@ public class HolidayService {
                 }
             }
         }
+    }
+
+    public void addHolidays(List<LocalDate> dates) {
+        List<Holiday> holidays = dates
+                .stream()
+                .filter(date -> !holidayRepository.existsByDate(date))
+                .map(date -> Holiday.builder().date(date).build())
+                .toList();
+
+        holidayRepository.saveAll(holidays);
+    }
+
+    @Transactional
+    public void removeHolidays(List<LocalDate> dates) {
+        System.out.println(dates);
+        holidayRepository.deleteByDateIn(dates);
     }
 }
