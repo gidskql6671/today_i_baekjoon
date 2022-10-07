@@ -37,7 +37,7 @@
 			<th:block th:each="ele : ${userCommits}">
 				<tr>
 					<td>
-						<a class="text-decoration-none"
+						<a class="text-decoration-none text-black"
 						   th:text="${ele.key}"
 						   th:href="@{/user/{userId}(userId = ${ele.key})}"></a>
 					</td>
