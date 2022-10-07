@@ -18,7 +18,7 @@ public class HolidayService {
     private final HolidayRepository holidayRepository;
 
     public void sync(LocalDate start, LocalDate end) {
-        for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
+        for (LocalDate date = start; !date.isAfter(end); date = date.plusDays(1)) {
             DayOfWeek dayOfWeek = date.getDayOfWeek();
             if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
                 if (holidayRepository.findByDate(date).isEmpty()) {

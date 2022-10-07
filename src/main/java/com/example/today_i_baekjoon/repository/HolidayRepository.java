@@ -10,6 +10,9 @@ import java.util.Optional;
 public interface HolidayRepository extends JpaRepository<Holiday, Long> {
 
     Optional<Holiday> findByDate(LocalDate date);
+
+    List<Holiday> findAllByDateBetween(LocalDate start, LocalDate end);
+
     boolean existsByDate(LocalDate date);
 
     void deleteByDateIn(List<LocalDate> date);

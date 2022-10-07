@@ -4,6 +4,7 @@ import com.example.today_i_baekjoon.domain.User;
 import com.example.today_i_baekjoon.dto.CommitInfo;
 import com.example.today_i_baekjoon.exception.UserNotFoundException;
 import com.example.today_i_baekjoon.service.CommitService;
+import com.example.today_i_baekjoon.service.FineService;
 import com.example.today_i_baekjoon.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,7 @@ public class HomeController {
 	
 	private final CommitService commitService;
 	private final UserService userService;
+	private final FineService fineService;
 
 	@GetMapping("/")
 	public String homepage(Model model,
@@ -42,7 +44,6 @@ public class HomeController {
 		
 		Map<String, List<CommitInfo>> userCommits = mappedCommitToUser(users, commits);
 
-		log.info(String.valueOf(userCommits));
 		model.addAttribute("userCommits", userCommits);
 		model.addAttribute("curDate", curDate);
 		// NOTE thymeleaf dates 라이브러리 사용이 안되는 버그가 있어서 여기서 다 넣어줌. 뭐가 문젠지 모르겠음;;
@@ -88,6 +89,37 @@ public class HomeController {
 		}
 		
 		return "detail";
+	}
+
+	@GetMapping("/fine/month")
+	public String showFindOfMonth(Model model,
+								  @DateTimeFormat(pattern = "yyyy-MM") @RequestParam("yearMonth") Optional<YearMonth> yearMonthReq) {
+		YearMonth todayYearMonth = YearMonth.now(ZoneId.of("Asia/Seoul"));
+		YearMonth yearMonth = yearMonthReq.orElse(todayYearMonth);
+		if (yearMonth.isAfter(todayYearMonth)) {
+			return "redirect:/find/month";
+		}
+
+		LocalDate start = yearMonth.atDay(1);
+		LocalDate end = yearMonth.atEndOfMonth();
+
+		LocalDate today = ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDate();
+		if (end.isAfter(today)) {
+			end = today;
+		}
+
+		Map<User, Integer> finesMappedUser = fineService.getFineBetweenDate(start, end);
+		Map<String, Integer> finesMappedUsername = new HashMap<>();
+		finesMappedUser.forEach((k, v) -> finesMappedUsername.put(k.getUsername(), v));
+
+		model.addAttribute("fines", finesMappedUsername);
+		model.addAttribute("yearMonth", yearMonth);
+		model.addAttribute("prevYearMonth", yearMonth.minusMonths(1));
+		if (yearMonth.isBefore(todayYearMonth)) {
+			model.addAttribute("nextYearMonth", yearMonth.plusMonths(1));
+		}
+
+		return "fine_of_month";
 	}
 	
 	
