@@ -10,6 +10,10 @@
 
 <th:block layout:fragment="content">
 	<div class="text-center">
+		<h3 class="mt-3">
+			<span th:text="${name}"> 이름 </span>님의 커밋 기록
+		</h3>
+		
 		<div class="sec_cal">
 			<div class="cal_nav">
 				<a th:href="@{''(yearMonth = ${prevYearMonth})}" class="nav-btn go-prev">prev</a>

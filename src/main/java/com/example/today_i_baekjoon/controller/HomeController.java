@@ -85,6 +85,8 @@ public class HomeController {
 				.map(LocalDate::getDayOfMonth)
 				.toList();
 		
+		model.addAttribute("name", user.get().getName());
+		
 		model.addAttribute("dateCommits", dateCommits);
 		model.addAttribute("calendar", calendar);
 		model.addAttribute("holidays", holidays);
