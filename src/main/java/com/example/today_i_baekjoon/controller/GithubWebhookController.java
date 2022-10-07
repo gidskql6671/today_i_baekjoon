@@ -2,6 +2,7 @@ package com.example.today_i_baekjoon.controller;
 
 import com.example.today_i_baekjoon.domain.User;
 import com.example.today_i_baekjoon.dto.CommitWebhookRequest;
+import com.example.today_i_baekjoon.exception.UserNotFoundException;
 import com.example.today_i_baekjoon.service.CommitService;
 import com.example.today_i_baekjoon.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +37,7 @@ public class GithubWebhookController {
         List<CommitWebhookRequest.Commit> commits = request.getCommits();
         User user = userService
                 .findUserByUsername(username)
-                .orElseGet(() -> userService.createUser(username));
+                .orElseThrow(UserNotFoundException::new);
 
         commitService.addCommits(user, commits);
         
