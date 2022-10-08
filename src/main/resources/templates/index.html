@@ -49,6 +49,34 @@
 		</table>
 	
 	</div>
+	<div class="text-center mt-5">
+		<h2> 푼 문제 목록 </h2>
+		<table class="table fs-3">
+			<thead>
+			<tr>
+				<th scope="col"> 이름 </th>
+				<th scope="col"> 문제 </th>
+				<th scope="col"> 난이도 </th>
+			</tr>
+			</thead>
+			<tbody>
+			<th:block th:each="ele : ${userCommits}">
+				<th:block th:if="${!#lists.isEmpty(ele.value)}">
+					<th:block th:each="commit : ${ele.value}" >
+						<tr>
+							<td th:text="${namesMappedUsername.get(ele.key)}" 
+							    th:rowspan="${#lists.size(ele.value)}"
+								th:if="${commitStat.first}"></td>
+							<td th:text="${commit.problemTitle}"></td>
+							<td th:text="${commit.problemRank}"></td>
+						</tr>
+					</th:block>
+					
+				</th:block>
+			</th:block>
+			</tbody>
+		</table>
+	</div>
 	
 </th:block>
 
