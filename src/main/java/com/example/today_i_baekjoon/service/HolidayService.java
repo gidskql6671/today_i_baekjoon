@@ -50,4 +50,8 @@ public class HolidayService {
                 .map(Holiday::getDate)
                 .toList();
     }
+    
+    public boolean isHoliday(LocalDate date) {
+        return holidayRepository.existsByDate(date);
+    }
 }

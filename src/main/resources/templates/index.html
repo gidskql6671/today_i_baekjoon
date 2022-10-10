@@ -4,24 +4,24 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
 
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{/css/index.css}" >
+</th:block>
+
 <th:block layout:fragment="content">
 	<div class="text-center">
 		<a class="fs-1 text-decoration-none" th:href="@{''(date = ${prevDate})}"> ◁ </a>
-		<span class="fs-1 mx-4"
+		<span class="fs-1 mx-4 day"
 		      th:text="${#temporals.format(curDate, 'yyyy-MM-dd(E)')}"
-		      th:if="${#temporals.dayOfWeek(curDate) == 6}"
-		      style="color: blue"> 날짜 </span>
-		<span class="fs-1 mx-4"
-		      th:text="${#temporals.format(curDate, 'yyyy-MM-dd(E)')}"
-		      th:if="${#temporals.dayOfWeek(curDate) == 7}"
-		      style="color: red"> 날짜 </span>
-		<span class="fs-1 mx-4"
-		      th:text="${#temporals.format(curDate, 'yyyy-MM-dd(E)')}"
-		      th:if="${#temporals.dayOfWeek(curDate) < 6}"> 날짜 </span>
+		      th:classappend="${#temporals.dayOfWeek(curDate) == 6 ? 'saturday' :
+		                        (#temporals.dayOfWeek(curDate) == 7 ? 'sunday' : '')}"> 날짜 </span>
 		<a class="fs-1 text-decoration-none"
 		   th:href="@{''(date = ${nextDate})}"
 		   th:if="${nextDate}"> ▷ </a>
 		<a class="fs-1 text-decoration-none" th:unless="${nextDate}" style="visibility: hidden"> ▷ </a>
+	</div>
+	<div class="text-center">
+		<p class="fs-3" th:if="${isHoliday}" style="color: green"> 휴일 </p>
 	</div>
 	<div class="text-center">
 		<table class="table table-striped fs-3" >
