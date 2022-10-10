@@ -1,7 +1,7 @@
 /* section calendar */
 
 .sec_cal {
-    width: 360px;
+    width: 540px;
     margin: 0 auto;
 }
 
@@ -78,7 +78,6 @@
 }
 
 .sec_cal .cal_wrap .day {
-    display:flex;
     align-items: center;
     justify-content: center;
     width: calc(100% / 7);
@@ -86,6 +85,22 @@
     font-size: 12px;
     text-align: center;
     border-radius: 50%;
+}
+
+.sec_cal .cal_wrap .day.day-element {
+    height: 64px;
+}
+
+.sec_cal .cal_wrap .day p {
+    margin: 0;
+}
+
+.sec_cal .cal_wrap .day p.commit {
+    color: green;
+}
+
+.sec_cal .cal_wrap .day p.holiday {
+    color: blue;
 }
 
 .current.today {background: rgb(242 242 242);}
@@ -107,12 +122,4 @@
 
 .sec_cal .cal_wrap .day.disable {
     color: #ddd;
-}
-
-.sec_cal .cal_wrap .day.commit {
-    background-color: greenyellow;
-}
-
-.sec_cal .cal_wrap .day.holiday {
-    background-color: lightblue;
 }
