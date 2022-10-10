@@ -3,10 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
-
-<th:block layout:fragment="css">
-	<link rel="stylesheet" th:href="@{/css/detail.css}" >
-</th:block>
+현
 
 <th:block layout:fragment="content">
 	<div class="text-center">
@@ -41,8 +38,8 @@
 					<th:block th:each="date : ${week}">
 						<div class="day day-element">
 							<p th:text="${date}"></p>
-							<p class="commit" th:if="${dateCommits.containsKey(date)}"> 완료 </p>
 							<p class="holiday" th:if="${holidays.contains(date)}"> 휴일 </p>
+							<p class="commit" th:if="${dateCommits.containsKey(date)}"> 완료 </p>
 						</div>
 					</th:block>
 				</th:block>
