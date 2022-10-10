@@ -4,7 +4,6 @@ import com.example.today_i_baekjoon.domain.User;
 import com.example.today_i_baekjoon.dto.CommitInfo;
 import com.example.today_i_baekjoon.exception.UserNotFoundException;
 import com.example.today_i_baekjoon.service.CommitService;
-import com.example.today_i_baekjoon.service.FineService;
 import com.example.today_i_baekjoon.service.HolidayService;
 import com.example.today_i_baekjoon.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
@@ -23,13 +23,13 @@ import java.time.ZonedDateTime;
 import java.util.*;
 
 @Controller
+@RequestMapping("/")
 @RequiredArgsConstructor
 @Slf4j
 public class HomeController {
 	
 	private final CommitService commitService;
 	private final UserService userService;
-	private final FineService fineService;
 	private final HolidayService holidayService;
 
 	@GetMapping("/")
@@ -106,38 +106,6 @@ public class HomeController {
 		return "detail";
 	}
 
-	@GetMapping("/fine/month")
-	public String showFindOfMonth(Model model,
-								  @DateTimeFormat(pattern = "yyyy-MM") @RequestParam("yearMonth") Optional<YearMonth> yearMonthReq) {
-		YearMonth todayYearMonth = YearMonth.now(ZoneId.of("Asia/Seoul"));
-		YearMonth yearMonth = yearMonthReq.orElse(todayYearMonth);
-		if (yearMonth.isAfter(todayYearMonth)) {
-			return "redirect:/find/month";
-		}
-
-		LocalDate start = yearMonth.atDay(1);
-		LocalDate end = yearMonth.atEndOfMonth();
-
-		LocalDate today = ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDate();
-		if (end.isAfter(today)) {
-			end = today;
-		}
-
-		Map<User, Integer> finesMappedUser = fineService.getFineBetweenDate(start, end);
-		Map<String, Integer> finesMappedUsername = new HashMap<>();
-		finesMappedUser.forEach((k, v) -> finesMappedUsername.put(k.getName(), v));
-
-		model.addAttribute("fines", finesMappedUsername);
-		model.addAttribute("yearMonth", yearMonth);
-		model.addAttribute("prevYearMonth", yearMonth.minusMonths(1));
-		if (yearMonth.isBefore(todayYearMonth)) {
-			model.addAttribute("nextYearMonth", yearMonth.plusMonths(1));
-		}
-
-		return "fine_of_month";
-	}
-	
-	
 	private Map<String, List<CommitInfo>> mappedCommitToUser(List<User> users, List<CommitInfo> commitInfos) {
 		Map<String, List<CommitInfo>> result = new HashMap<>();
 		

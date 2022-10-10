@@ -1,5 +1,5 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<div th:fragment="headerFragment">
+<div th:fragment="headerFragment" class="mb-4">
 	<h1 class="mb-4 d-flex justify-content-between">
 		<a class="text-decoration-none text-black" th:href="@{/}"> 1일 1백준 로그 </a>
 	</h1>
@@ -7,6 +7,8 @@
 		<a class="text-decoration-none text-black" th:href="@{/}"> 오늘의 커밋 </a>
 		<div class="border-end"></div>
 		<a class="text-decoration-none text-black" th:href="@{/fine/month}"> 한달치 벌금 </a>
+		<div class="border-end"></div>
+		<a class="text-decoration-none text-black" th:href="@{/fine/week}"> 일주일치 벌금 </a>
 	</nav>
 </div>
 </html>

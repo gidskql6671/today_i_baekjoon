@@ -5,11 +5,12 @@ import com.example.today_i_baekjoon.domain.User;
 import com.example.today_i_baekjoon.dto.CommitInfo;
 import com.example.today_i_baekjoon.dto.CommitWebhookRequest;
 import com.example.today_i_baekjoon.repository.CommitRepository;
+import com.example.today_i_baekjoon.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CommitService {
 
+    private final UserRepository userRepository;
     private final CommitRepository commitRepository;
     private final Pattern pattern = Pattern.compile("^\\[(?<rank>.*)] Title: (?<title>.*), Time:.*");
 
@@ -68,5 +70,31 @@ public class CommitService {
                 .stream()
                 .map(CommitInfo::fromEntity)
                 .collect(Collectors.toList());
+    }
+    
+    public Map<User, List<Boolean>> getSolvedListBetweenDate(LocalDate start, LocalDate end) {
+        List<User> users = userRepository.findAll();
+        List<Commit> commits = commitRepository.findAllByCommitDateBetween(start, end);
+        
+        Map<User, List<Boolean>> result = new HashMap<>();
+        
+        users.forEach(user -> result.put(user, new ArrayList<>()));
+        
+        for (LocalDate date = start; !date.isAfter(end); date = date.plusDays(1)) {
+            LocalDate finalDate = date;
+            
+            for(User user : result.keySet()) {
+                Optional<Commit> solved = commits
+                        .stream()
+                        .filter(commit ->
+                                commit.getCommitDate().isEqual(finalDate) &&
+                                        commit.getUser().getUsername().equals(user.getUsername())
+                        ).findAny();
+
+                result.get(user).add(solved.isPresent());
+            }
+        }
+        
+        return result;
     }
 }
