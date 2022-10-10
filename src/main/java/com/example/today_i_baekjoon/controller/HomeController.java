@@ -125,7 +125,7 @@ public class HomeController {
 
 		Map<User, Integer> finesMappedUser = fineService.getFineBetweenDate(start, end);
 		Map<String, Integer> finesMappedUsername = new HashMap<>();
-		finesMappedUser.forEach((k, v) -> finesMappedUsername.put(k.getUsername(), v));
+		finesMappedUser.forEach((k, v) -> finesMappedUsername.put(k.getName(), v));
 
 		model.addAttribute("fines", finesMappedUsername);
 		model.addAttribute("yearMonth", yearMonth);
