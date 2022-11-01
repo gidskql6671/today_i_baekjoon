@@ -6,6 +6,7 @@ import com.example.today_i_baekjoon.exception.UserNotFoundException;
 import com.example.today_i_baekjoon.service.CommitService;
 import com.example.today_i_baekjoon.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,7 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/api/webhook")
 @RequiredArgsConstructor
+@Slf4j
 public class GithubWebhookController {
 
     private final UserService userService;
@@ -39,6 +41,7 @@ public class GithubWebhookController {
                 .findUserByUsername(username)
                 .orElseThrow(UserNotFoundException::new);
 
+        log.info(String.valueOf(commits));
         commitService.addCommits(user, commits);
         
         return ResponseEntity.ok().build();

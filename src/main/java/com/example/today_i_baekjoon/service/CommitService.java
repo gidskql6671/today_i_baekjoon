@@ -30,8 +30,11 @@ public class CommitService {
                 .filter(commitRequest -> pattern.matcher(commitRequest.getMessage()).matches())
                 .map(commitRequest -> {
                     Matcher matcher = pattern.matcher(commitRequest.getMessage());
-                    String rank = matcher.group("rank");
-                    String title = matcher.group("title");
+                    String rank = "", title = "";
+                    if (matcher.matches()) {
+                        rank = matcher.group("rank");
+                        title = matcher.group("title");
+                    }
                     
                     return Commit.builder()
                             .user(user)
