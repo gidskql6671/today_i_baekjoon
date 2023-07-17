@@ -37,7 +37,7 @@ class CommitService(
 
                 Commit(
                     user = user,
-                    commitDate = it.timestamp.toLocalDate(),
+                    commitDate = it.timestamp.plusHours(9).toLocalDate(),
                     commitUrl = it.url,
                     problemTitle = title,
                     problemRank = rank
