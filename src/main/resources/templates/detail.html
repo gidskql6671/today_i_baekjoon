@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{/css/detail.css}" >
+</th:block>
+
+<th:block layout:fragment="content">
+	<div class="text-center">
+		<h3 class="mt-3">
+			<span th:text="${name}"> 이름 </span>님의 커밋 기록
+		</h3>
+		
+		<div class="sec_cal">
+			<div class="cal_nav">
+				<a th:href="@{''(yearMonth = ${prevYearMonth})}" class="nav-btn go-prev">prev</a>
+				<div class="year-month" th:text="${yearMonth}"> 날짜 </div>
+				<a th:href="@{''(yearMonth = ${nextYearMonth})}"
+				   class="nav-btn go-next"
+				   th:if="${nextYearMonth}"> next </a>
+				<a th:href="@{''(yearMonth = ${nextYearMonth})}"
+				   class="nav-btn go-next"
+				   th:unless="${nextYearMonth}" 
+				   style="visibility: hidden"> next </a>
+			</div>
+			<div class="cal_wrap">
+				<div class="days">
+					<div class="day">SUN</div>
+					<div class="day">MON</div>
+					<div class="day">TUE</div>
+					<div class="day">WED</div>
+					<div class="day">THU</div>
+					<div class="day">FRI</div>
+					<div class="day">SAT</div>
+				</div>
+				<div class="dates">
+				<th:block th:each="week : ${calendar}">
+					<th:block th:each="date : ${week}">
+						<div class="day day-element">
+							<p th:text="${date}"></p>
+							<p class="holiday" th:if="${holidays.contains(date)}"> 휴일 </p>
+							<p class="commit" th:if="${dateCommits.containsKey(date)}"> 완료 </p>
+						</div>
+					</th:block>
+				</th:block>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>

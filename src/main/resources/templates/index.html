@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{/css/index.css}" >
+</th:block>
+
+<th:block layout:fragment="content">
+	<div class="text-center">
+		<a class="fs-1 text-decoration-none" th:href="@{''(date = ${prevDate})}"> ◁ </a>
+		<span class="fs-1 mx-4 day"
+		      th:text="${#temporals.format(curDate, 'yyyy-MM-dd(E)')}"
+		      th:classappend="${#temporals.dayOfWeek(curDate) == 6 ? 'saturday' :
+		                        (#temporals.dayOfWeek(curDate) == 7 ? 'sunday' : '')}"> 날짜 </span>
+		<a class="fs-1 text-decoration-none"
+		   th:href="@{''(date = ${nextDate})}"
+		   th:if="${nextDate}"> ▷ </a>
+		<a class="fs-1 text-decoration-none" th:unless="${nextDate}" style="visibility: hidden"> ▷ </a>
+	</div>
+	<div class="text-center">
+		<p class="fs-3" th:if="${isHoliday}" style="color: green"> 휴일 </p>
+	</div>
+	<div class="text-center">
+		<table class="table table-striped fs-3" >
+			<thead>
+			<tr>
+				<th scope="col"> 이름 </th>
+				<th scope="col"> 커밋 했어? </th>
+				<th scope="col"> 커밋 개수 </th>
+			</tr>
+			</thead>
+			<tbody>
+			
+			<th:block th:each="ele : ${userCommits}">
+				<tr>
+					<td>
+						<a class="text-decoration-none text-black"
+						   th:text="${namesMappedUsername.get(ele.key)}"
+						   th:href="@{/user/{userId}(userId = ${ele.key})}"></a>
+					</td>
+					<td th:text="${#lists.size(ele.value) > 0 ? '&#9989;' : '&#10060;'}"></td>
+					<td th:text="${#lists.size(ele.value)}"> 개수 </td>
+				</tr>
+			</th:block>
+			</tbody>
+		</table>
+	
+	</div>
+	<div class="text-center mt-5">
+		<h2> 푼 문제 목록 </h2>
+		<table class="table fs-3">
+			<thead>
+			<tr>
+				<th scope="col"> 이름 </th>
+				<th scope="col"> 문제 </th>
+				<th scope="col"> 난이도 </th>
+			</tr>
+			</thead>
+			<tbody>
+			<th:block th:each="ele : ${userCommits}">
+				<th:block th:if="${!#lists.isEmpty(ele.value)}">
+					<th:block th:each="commit : ${ele.value}" >
+						<tr>
+							<td th:text="${namesMappedUsername.get(ele.key)}" 
+							    th:rowspan="${#lists.size(ele.value)}"
+								th:if="${commitStat.first}"></td>
+							<td ><a th:href="${commit.commitUrl}" th:text="${commit.problemTitle}"></a></td>
+							<td th:text="${commit.problemRank}"></td>
+						</tr>
+					</th:block>
+					
+				</th:block>
+			</th:block>
+			</tbody>
+		</table>
+	</div>
+	
+</th:block>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<th:block layout:fragment="content" th:object="${data}">
+    <div class="text-center">
+        <a class="fs-1 text-decoration-none" th:href="@{''(startDate = *{prevStartDate})}"> ◁ </a>
+        <span class="fs-1 mx-4"
+              th:text="*{dates[0].toString() + ' ~ ' + dates[6].toString()}"> 날짜 </span>
+        <a class="fs-1 text-decoration-none"
+           th:href="@{''(startDate = *{nextStartDate})}"
+           th:if="*{nextStartDate}"> ▷ </a>
+        <a class="fs-1 text-decoration-none" th:unless="*{nextStartDate}" style="visibility: hidden"> ▷ </a>
+    </div>
+
+    <div class="text-center">
+        <table class="table table-striped fs-3" >
+            <thead>
+            <tr>
+                <th> - </th>
+                <th:block th:each="date : *{dates}">
+                    <th scope="col" th:text="${#temporals.format(date, 'E')}"> 요일 </th>
+                </th:block>
+            </tr>
+            </thead>
+            <tbody>
+
+            <th:block th:each="ele : *{solvedList}">
+                <tr>
+                    <td th:text="${ele.key}"> 이름 </td>
+                    <th:block th:each="solved, iterInfo : ${ele.value}">
+                        <td th:text="${solved ? '&#9989;' : 
+                                       (data.isHolidays[iterInfo.index] ? '&#128564;' : '&#10060;')}"></td>
+                    </th:block>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+
+    </div>
+</th:block>
+
+</html>
