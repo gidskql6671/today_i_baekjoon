@@ -15,5 +15,15 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - run: chmod +x gradlew
-      - run: ./gradlew clean build -x test
+      # - run: chmod +x gradlew
+      # - run: ./gradlew clean build -x test
+
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@master
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
+          script: |
+            ls
