@@ -44,4 +44,5 @@ jobs:
             sudo kill $(ps -ef | grep '[0-9] java -jar today_i_baekjoon-0.0.1.jar$' | awk '{print $2}') || true
             cd today_i_baekjoon
             chmod +x today_i_baekjoon-0.0.1.jar
-            sudo nohup java -jar ./today_i_baekjoon-0.0.1.jar > nohup.out 2> nohup.err < /dev/null &
+            sudo rm nohup.out
+            sudo nohup java -jar today_i_baekjoon-0.0.1.jar > nohup.out 2> nohup.err < /dev/null &
