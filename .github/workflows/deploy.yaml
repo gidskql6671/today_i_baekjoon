@@ -38,7 +38,7 @@ jobs:
           username: ${{ secrets.REMOTE_USER }}
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
-            sudo kill $(ps -ef | grep '[0-9] java -jar today_i_baekjoon-0.0.1.jar$' | awk '{print $2}')
+            sudo kill $(ps -ef | grep '[0-9] java -jar today_i_baekjoon-0.0.1.jar$' | awk '{print $2}') || true
             cd today_i_baekjoon
             chmod +x today_i_baekjoon-0.0.1.jar
             sudo nohup java -jar ./today_i_baekjoon-0.0.1.jar &
