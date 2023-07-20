@@ -15,6 +15,9 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - run: touch ./src/main/resources/secrets.yaml
+      - run: echo "${{ secrets.APPLICATION_SECRETS }}" > ./src/main/resources/secrets.yaml
+
       - run: chmod +x gradlew
       - run: ./gradlew clean build -x test
       - run: mv build/libs/today_i_baekjoon-0.0.1.jar ./
