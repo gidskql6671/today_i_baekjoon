@@ -15,8 +15,19 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      # - run: chmod +x gradlew
-      # - run: ./gradlew clean build -x test
+      - run: chmod +x gradlew
+      - run: ./gradlew clean build -x test
+
+      - name: Deliver File
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
+          source: "build/libs/*.jar"
+          target: "today_i_baekjoon/libs"
+          rm: true
 
       - name: Deploy to Server
         uses: appleboy/ssh-action@master
@@ -26,4 +37,6 @@ jobs:
           username: ${{ secrets.REMOTE_USER }}
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
-            ls
+            sudo kill $(ps -ef | grep '[0-9] java -jar today_i_baekjoon-0.0.1.jar$' | awk '{print $2}')
+            cd today_i_baekjoon
+            sudo nohup java -jar ./libs/today_i_baekjoon-0.0.1.jar &
